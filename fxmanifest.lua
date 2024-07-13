@@ -8,7 +8,7 @@ files {
     'style.css',
     'app.js',
     'yt.js',
-    'assets/image/cursor.png',
+    'cursor.png',
 }
 
 loadscreen 'index.html'
