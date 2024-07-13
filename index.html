@@ -1,35 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-  <title>Ekran ładowania z filmem YouTube</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: #000;
-    }
-
-    #video-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    #video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen with YouTube Video</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="video-container">
-    <video id="video" autoplay muted loop>
-      <source src="https://www.youtube.com/watch?v=Qg26dVQahYw" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+    <div id="loading-screen">
+        <div id="video-container">
+            <iframe id="youtube-video" 
+                    src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&controls=0&loop=1&playlist=YOUR_VIDEO_ID&mute=1" 
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
