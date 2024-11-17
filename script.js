@@ -6,25 +6,33 @@ let mediaStream;
 
 async function startStream() {
     try {
+        // Prośba o dostęp do kamery i mikrofonu
         mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         liveVideo.srcObject = mediaStream;
 
+        // Aktualizacja przycisków
         startStreamButton.disabled = true;
         stopStreamButton.disabled = false;
-        showNotification("Streaming started!");
+
+        showNotification("Streaming started successfully!");
     } catch (error) {
-        alert("Error accessing media devices: " + error.message);
+        // Obsługa błędów
+        console.error("Error accessing media devices:", error);
+        alert("Could not start the stream. Please check permissions or device availability.");
     }
 }
 
 function stopStream() {
     if (mediaStream) {
+        // Zatrzymaj wszystkie strumienie
         mediaStream.getTracks().forEach(track => track.stop());
         liveVideo.srcObject = null;
 
+        // Aktualizacja przycisków
         startStreamButton.disabled = false;
         stopStreamButton.disabled = true;
-        showNotification("Streaming stopped!");
+
+        showNotification("Streaming stopped.");
     }
 }
 
