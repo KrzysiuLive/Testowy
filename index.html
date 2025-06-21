@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Krzysiu Squad</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Witaj na stronie Krzysia!</h1>
+    <nav>
+      <a href="game.html">Gra</a>
+      <a href="notes.html">Notatki</a>
+      <a href="blog.html">Blog</a>
+      <a href="admin.html">Panel Admina</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Nowości!</h2>
+      <p>Witaj na oficjalnej stronie Krzysia z YouTube! Sprawdź blog, zagraj w grę lub zostaw wiadomość.</p>
+    </section>
+  </main>
+  
+<div id="notif-bar" style="background:#ff0; color:#000; text-align:center; padding:10px; display:none;">
+  📢 Nowy wpis na blogu! <a href="blog.html">Zobacz</a>
+</div>
+<script>
+  const notif = document.getElementById("notif-bar");
+  const lastVisit = localStorage.getItem("lastVisit");
+  const now = new Date().getTime();
+  const posts = JSON.parse(localStorage.getItem("krzysiu_posts") || "[]");
+
+  if (!lastVisit || (now - lastVisit) > 10000) {
+    if (posts.length > 0) notif.style.display = "block";
+    localStorage.setItem("lastVisit", now);
+  }
+</script>
+
+  
+<button onclick="toggleDarkMode()" style="position:fixed;bottom:10px;right:10px;">🌙/☀️</button>
+<script>
+  function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle("dark");
+    localStorage.setItem("theme", body.classList.contains("dark") ? "dark" : "light");
+  }
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+  }
+</script>
+<style>
+  body.dark {
+    background: #111;
+    color: #eee;
+  }
+  body.dark a { color: #aaf; }
+  body.dark header, body.dark nav, body.dark .card {
+    background-color: #222;
+    border-color: #444;
+  }
+</style>
+
+</body>
+</html>
