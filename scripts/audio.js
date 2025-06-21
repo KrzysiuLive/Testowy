@@ -1,31 +1,41 @@
+function createSound(path) {
+  const audio = new Audio(path);
+  audio.preload = "auto";
+  return audio;
+}
 
+const navSound = createSound("assets/sounds/nav.mp3");
+const eatSound = createSound("assets/sounds/pickup.mp3");
+const gameOverSound = createSound("assets/sounds/gameover.mp3");
+const loginSound = createSound("assets/sounds/login.mp3");
+
+// Wymuś aktywację dźwięków po pierwszym kliknięciu
+let audioEnabled = false;
+window.addEventListener("click", () => {
+  if (!audioEnabled) {
+    [navSound, eatSound, gameOverSound, loginSound].forEach(s => {
+      s.volume = 0;
+      s.play().catch(() => {});
+      s.pause();
+      s.currentTime = 0;
+      s.volume = 1;
+    });
+    audioEnabled = true;
+  }
+}, { once: true });
+
+// Odtwarzaj dźwięk z pełnym resetem
 function playSafeSound(sound) {
-  if (!sound) return;
+  if (!audioEnabled) return;
   try {
     sound.currentTime = 0;
     sound.play().catch(() => {});
   } catch (e) {}
 }
 
-const navSound = new Audio("assets/sounds/nav.mp3");
-const eatSound = new Audio("assets/sounds/pickup.mp3");
-const gameOverSound = new Audio("assets/sounds/gameover.mp3");
-const loginSound = new Audio("assets/sounds/login.mp3");
-
-navSound.preload = "auto";
-eatSound.preload = "auto";
-gameOverSound.preload = "auto";
-loginSound.preload = "auto";
-
-window.addEventListener("click", () => {
-  playSafeSound(navSound);
-  playSafeSound(eatSound);
-  playSafeSound(gameOverSound);
-  playSafeSound(loginSound);
-}, { once: true });
-
-document.querySelectorAll("a, button").forEach(el => {
-  el.addEventListener("click", () => {
-    playSafeSound(navSound);
+// Dodaj dźwięk kliknięcia linków/przycisków
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("a, button").forEach(el => {
+    el.addEventListener("click", () => playSafeSound(navSound));
   });
 });
