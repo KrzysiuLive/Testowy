@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Notatki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Prywatne Notatki</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Gra</a>
+      <a href="notes.html">Notatki</a>
+    </nav>
+  </header>
+  <main>
+    <div id="login">
+      <input type="password" id="password" placeholder="Wpisz hasło">
+      <button onclick="checkPassword()">Zaloguj</button>
+    </div>
+    <div id="notepad" style="display:none;">
+      <textarea id="notes" placeholder="Twoje notatki..."></textarea>
+    </div>
+  </main>
+  <script src="scripts/notes.js"></script>
+</body>
+</html>

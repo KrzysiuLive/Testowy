@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Gra</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="fade-in">
+  <header class="animated-header">
+    <h1>🐍 Snake - Graj i relaksuj się!</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Gra</a>
+      <a href="notes.html">Notatki</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card">
+      <p><strong>Jak grać?</strong><br>
+        Użyj strzałek na klawiaturze aby poruszać się.<br>
+        Zbieraj zielone kropki i nie zderz się ze sobą ani ze ścianą!<br>
+        Powodzenia 💪
+      </p>
+
+      <label for="difficulty">Wybierz poziom trudności:</label>
+      <select id="difficulty">
+        <option value="easy">Łatwy</option>
+        <option value="medium" selected>Średni</option>
+        <option value="hard">Trudny</option>
+      </select>
+
+      <canvas id="game" width="400" height="400"></canvas>
+    </section>
+  </main>
+
+  <script>
+    const navSound = new Audio("assets/sounds/click.mp3");
+    document.querySelectorAll("a").forEach(el => {
+      el.addEventListener("click", () => {
+        navSound.currentTime = 0;
+        navSound.play();
+      });
+    });
+  </script>
+  <script src="scripts/game.js"></script>
+</body>
+</html>
