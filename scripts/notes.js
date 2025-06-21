@@ -1,10 +1,10 @@
+const loginSound = new Audio("assets/sounds/login.mp3");
 
 function checkPassword() {
   const password = document.getElementById("password").value;
-  const loginSound = new Audio("assets/sounds/login.mp3");
 
   if (password === "tajnehaslo") {
-    loginSound.play();
+    playSafeSound(loginSound);
     document.getElementById("login").style.display = "none";
     document.getElementById("notepad").style.display = "block";
     const saved = localStorage.getItem("notes");
