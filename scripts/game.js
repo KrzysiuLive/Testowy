@@ -7,6 +7,7 @@ let food = randomFood();
 let dir = null;
 let score = 0;
 
+// Dźwięki obsługiwane przez playSafeSound
 const eatSound = new Audio("assets/sounds/pickup.mp3");
 const gameOverSound = new Audio("assets/sounds/gameover.mp3");
 
@@ -30,7 +31,6 @@ function collision(x, y, array) {
   return array.some(seg => seg.x === x && seg.y === y);
 }
 
-// 🎮 Poziomy trudności
 const difficultyMap = {
   easy: 300,
   medium: 180,
@@ -38,7 +38,7 @@ const difficultyMap = {
 };
 
 let lastTime = 0;
-let moveDelay = 180; // wartość startowa = medium
+let moveDelay = 180;
 let elapsed = 0;
 
 function updateDifficulty() {
@@ -89,7 +89,7 @@ function drawGame() {
   if (snakeX === food.x && snakeY === food.y) {
     food = randomFood();
     score++;
-    eatSound.play();
+    playSafeSound(eatSound);
   } else {
     snake.pop();
   }
@@ -99,7 +99,7 @@ function drawGame() {
     snakeX >= canvas.width || snakeY >= canvas.height ||
     collision(snakeX, snakeY, snake)
   ) {
-    gameOverSound.play();
+    playSafeSound(gameOverSound);
     alert("Koniec gry! Twój wynik: " + score);
     resetGame();
     return;
@@ -118,11 +118,10 @@ function gameLoop(timestamp) {
   if (elapsed >= moveDelay) {
     drawGame();
     elapsed = 0;
-    lastTime = timestamp; // ⬅️ kluczowe: aktualizujemy tutaj
+    lastTime = timestamp;
   }
 }
 
-// ⏱️ Start gry
 updateDifficulty();
 resetGame();
 requestAnimationFrame(gameLoop);
