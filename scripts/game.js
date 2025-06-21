@@ -30,15 +30,16 @@ function collision(x, y, array) {
   return array.some(seg => seg.x === x && seg.y === y);
 }
 
-let lastTime = 0;
-let moveDelay = 150; // ms — to zależy od poziomu trudności
-let elapsed = 0;
-
+// 🎮 Poziomy trudności
 const difficultyMap = {
-  easy: 200,
-  medium: 120,
-  hard: 80
+  easy: 300,
+  medium: 180,
+  hard: 120
 };
+
+let lastTime = 0;
+let moveDelay = 180; // wartość startowa = medium
+let elapsed = 0;
 
 function updateDifficulty() {
   const diff = document.getElementById("difficulty").value;
@@ -57,19 +58,6 @@ function resetGame() {
   score = 0;
   lastTime = 0;
   elapsed = 0;
-}
-
-function gameLoop(timestamp) {
-  requestAnimationFrame(gameLoop);
-  if (!lastTime) lastTime = timestamp;
-  elapsed += timestamp - lastTime;
-
-  if (elapsed >= moveDelay) {
-    drawGame();
-    elapsed = 0;
-  }
-
-  lastTime = timestamp;
 }
 
 function drawGame() {
@@ -106,7 +94,11 @@ function drawGame() {
     snake.pop();
   }
 
-  if (snakeX < 0 || snakeY < 0 || snakeX >= 400 || snakeY >= 400 || collision(snakeX, snakeY, snake)) {
+  if (
+    snakeX < 0 || snakeY < 0 ||
+    snakeX >= canvas.width || snakeY >= canvas.height ||
+    collision(snakeX, snakeY, snake)
+  ) {
     gameOverSound.play();
     alert("Koniec gry! Twój wynik: " + score);
     resetGame();
@@ -117,6 +109,20 @@ function drawGame() {
   snake.unshift(newHead);
 }
 
+function gameLoop(timestamp) {
+  requestAnimationFrame(gameLoop);
+
+  if (!lastTime) lastTime = timestamp;
+  elapsed += timestamp - lastTime;
+
+  if (elapsed >= moveDelay) {
+    drawGame();
+    elapsed = 0;
+    lastTime = timestamp; // ⬅️ kluczowe: aktualizujemy tutaj
+  }
+}
+
+// ⏱️ Start gry
 updateDifficulty();
 resetGame();
 requestAnimationFrame(gameLoop);
