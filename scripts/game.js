@@ -1,9 +1,8 @@
-
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 const box = 20;
-let snake = [{x: 9 * box, y: 10 * box}];
+let snake = [{ x: 9 * box, y: 10 * box }];
 let food = randomFood();
 let dir = null;
 let score = 0;
@@ -31,6 +30,48 @@ function collision(x, y, array) {
   return array.some(seg => seg.x === x && seg.y === y);
 }
 
+let lastTime = 0;
+let moveDelay = 150; // ms — to zależy od poziomu trudności
+let elapsed = 0;
+
+const difficultyMap = {
+  easy: 200,
+  medium: 120,
+  hard: 80
+};
+
+function updateDifficulty() {
+  const diff = document.getElementById("difficulty").value;
+  moveDelay = difficultyMap[diff];
+}
+
+document.getElementById("difficulty").addEventListener("change", () => {
+  updateDifficulty();
+  resetGame();
+});
+
+function resetGame() {
+  snake = [{ x: 9 * box, y: 10 * box }];
+  food = randomFood();
+  dir = null;
+  score = 0;
+  lastTime = 0;
+  elapsed = 0;
+}
+
+function gameLoop(timestamp) {
+  requestAnimationFrame(gameLoop);
+  if (!lastTime) lastTime = timestamp;
+  elapsed += timestamp - lastTime;
+
+  if (elapsed >= moveDelay) {
+    drawGame();
+    elapsed = 0;
+  }
+
+  lastTime = timestamp;
+}
+
 function drawGame() {
   ctx.fillStyle = "#121212";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -46,6 +87,8 @@ function drawGame() {
   ctx.fillStyle = "#fff";
   ctx.font = "20px Arial";
   ctx.fillText("Wynik: " + score, 10, 390);
+
+  if (!dir) return;
 
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
@@ -65,34 +108,15 @@ function drawGame() {
 
   if (snakeX < 0 || snakeY < 0 || snakeX >= 400 || snakeY >= 400 || collision(snakeX, snakeY, snake)) {
     gameOverSound.play();
-    clearInterval(gameLoop);
-    setTimeout(() => {
-      alert("Koniec gry! Twój wynik: " + score);
-      location.reload();
-    }, 200);
+    alert("Koniec gry! Twój wynik: " + score);
+    resetGame();
     return;
   }
 
-  const newHead = {x: snakeX, y: snakeY};
+  const newHead = { x: snakeX, y: snakeY };
   snake.unshift(newHead);
 }
 
-const difficultyMap = {
-  easy: 200,
-  medium: 120,
-  hard: 80
-};
-
-let gameLoop;
-function startGame() {
-  const diff = document.getElementById("difficulty").value;
-  clearInterval(gameLoop);
-  gameLoop = setInterval(drawGame, difficultyMap[diff]);
-  snake = [{x: 9 * box, y: 10 * box}];
-  dir = null;
-  score = 0;
-  food = randomFood();
-}
-
-document.getElementById("difficulty").addEventListener("change", startGame);
-window.onload = startGame;
+updateDifficulty();
+resetGame();
+requestAnimationFrame(gameLoop);
