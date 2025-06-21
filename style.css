@@ -1,88 +1,77 @@
-
 body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to right, #121212, #1e1e1e);
-  color: white;
-  text-align: center;
-  overflow-x: hidden;
+  margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212; color: #eee;
+  display: flex; flex-direction: column; min-height: 100vh;
 }
-
 header {
-  padding: 1rem;
-  background: #ff2d55;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  animation: slide-down 1s ease-out;
+  background: #ff2d55; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between;
 }
-
 .logo {
-  width: 80px;
-  border-radius: 50%;
-  animation: spin 5s linear infinite;
+  height: 40px;
+  cursor: pointer;
 }
-
 nav a {
-  color: white;
-  margin: 0 1rem;
-  text-decoration: none;
-  font-weight: bold;
+  color: #fff; text-decoration: none; margin: 0 10px; font-weight: bold;
+  transition: color 0.3s ease;
 }
-
 nav a:hover {
+  color: #000;
+}
+.section {
+  padding: 20px; max-width: 800px; margin: 20px auto;
+  background: #1e1e1e; border-radius: 8px; box-shadow: 0 0 15px rgba(255,45,85,0.3);
+}
+.social-links a {
+  color: #ff2d55; text-decoration: none; margin-right: 15px;
+  font-weight: 600; font-size: 1.1rem;
+}
+.social-links a:hover {
   text-decoration: underline;
-  color: #ffd700;
 }
-
-.social-links {
-  list-style: none;
-  padding: 0;
-  font-size: 1.2rem;
+#game {
+  background: #000; display: block; margin: 20px auto; border-radius: 8px;
+  box-shadow: 0 0 10px #ff2d55;
 }
-
-.social-links li {
-  margin: 0.5rem 0;
+.scoreboard {
+  text-align: center; font-size: 1.2rem; margin-top: 10px; color: #ff2d55;
 }
-
-textarea {
-  width: 90%;
-  height: 300px;
-  background: #1e1e1e;
-  color: white;
-  border: none;
-  padding: 1rem;
-  font-size: 1rem;
+#idea-board {
+  display: flex; justify-content: space-between;
+  gap: 10px;
 }
-
+.column {
+  background: #222; border-radius: 8px; padding: 10px; width: 30%;
+  display: flex; flex-direction: column;
+  max-height: 400px; overflow-y: auto;
+  box-shadow: 0 0 10px rgba(255,45,85,0.4);
+}
+.column h3 {
+  margin-top: 0; margin-bottom: 10px; text-align: center;
+  color: #ff2d55;
+}
+.cards {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .card {
-  background: #222;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border-radius: 15px;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  background: #333; padding: 10px; border-radius: 5px; color: #eee;
+  cursor: grab;
+  user-select: none;
+  box-shadow: 0 0 5px rgba(255,45,85,0.6);
+  transition: background-color 0.3s ease;
 }
-
-.fade-in {
-  animation: fadeIn 1s ease-out forwards;
-  opacity: 0;
+.card:active {
+  cursor: grabbing;
+  background: #ff2d55;
+  color: #121212;
 }
-
-.fade-in-delay {
-  animation: fadeIn 2s ease-out forwards;
-  opacity: 0;
+button {
+  background: #ff2d55; border: none; color: #fff; padding: 8px 12px; border-radius: 5px;
+  cursor: pointer; font-weight: 600; margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-@keyframes slide-down {
-  from { transform: translateY(-50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+button:hover {
+  background: #ff1a3c;
 }
