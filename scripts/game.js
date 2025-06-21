@@ -1,8 +1,8 @@
-
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const highscoreEl = document.getElementById("highscore");
 
-let box = 20;
+const box = 20;
 let snake = [{x: 9 * box, y: 10 * box}];
 let food = {
   x: Math.floor(Math.random()*19+1) * box,
@@ -10,6 +10,11 @@ let food = {
 };
 let dir;
 let score = 0;
+let highscore = localStorage.getItem("snakeHighscore") || 0;
+highscoreEl.textContent = highscore;
+
+let lastFrameTime = 0;
+let gameSpeed = 120;
 
 document.addEventListener("keydown", direction);
 function direction(event){
@@ -19,7 +24,13 @@ function direction(event){
   else if(event.keyCode == 40 && dir != "UP") dir = "DOWN";
 }
 
-function draw() {
+function draw(currentTime) {
+  if (currentTime - lastFrameTime < gameSpeed) {
+    requestAnimationFrame(draw);
+    return;
+  }
+  lastFrameTime = currentTime;
+
   ctx.fillStyle = "#121212";
   ctx.fillRect(0, 0, 400, 400);
 
@@ -49,25 +60,41 @@ function draw() {
       y: Math.floor(Math.random()*19+1) * box
     };
     score++;
+    if (gameSpeed > 50) gameSpeed -= 3;
   } else {
     snake.pop();
   }
 
   if (snakeX < 0 || snakeY < 0 || snakeX >= 400 || snakeY >= 400 || collision(snakeX, snakeY, snake)) {
-    clearInterval(game);
     alert("Koniec gry! Twój wynik: " + score);
-    location.reload();
+    if(score > highscore) {
+      localStorage.setItem("snakeHighscore", score);
+      highscore = score;
+      highscoreEl.textContent = highscore;
+    }
+    // Restart game
+    snake = [{x: 9 * box, y: 10 * box}];
+    dir = null;
+    score = 0;
+    gameSpeed = 120;
+    food = {
+      x: Math.floor(Math.random()*19+1) * box,
+      y: Math.floor(Math.random()*19+1) * box
+    };
+    requestAnimationFrame(draw);
+    return;
   }
 
   let newHead = {x: snakeX, y: snakeY};
   snake.unshift(newHead);
+  requestAnimationFrame(draw);
 }
 
 function collision(x, y, array) {
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 1; i < array.length; i++) {
     if(x == array[i].x && y == array[i].y) return true;
   }
   return false;
 }
 
-let game = setInterval(draw, 120);
+requestAnimationFrame(draw);
