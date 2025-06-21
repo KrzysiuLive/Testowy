@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KrzysiuSquad</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://imgur.com/q1bDFLI.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KrzysiuSquad</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+<body class="fade-in">
+  <header class="animated-header">
+    <img src="https://imgur.com/q1bDFLI.png" alt="Logo" class="logo" />
+    <h1>Witaj na mojej stronie!</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Gra</a>
+      <a href="notes.html">Notatki</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card fade-in-delay">
+      <h2>Moje social media</h2>
+      <ul class="social-links">
+        <li><a href="https://www.youtube.com/@KrzysiuLive24" target="_blank">🎥 YouTube</a></li>
+        <li><a href="https://www.instagram.com/krzysiox222/" target="_blank">📸 Instagram</a></li>
+        <li><a href="https://discord.gg/SmcnmdEkze" target="_blank">💬 Discord</a></li>
+        <li><a href="https://www.tiktok.com/@krzysiox222" target="_blank">🎵 TikTok</a></li>
+      </ul>
+    </section>
+<section class="card fade-in-delay">
+  <h2>Kontakt / Współpraca</h2>
+  <p>Masz pytania lub propozycję współpracy? Napisz do mnie: <a href="mailto:krzysiu@example.com">krzysiu@example.com</a></p>
+</section>
+
+<section class="card fade-in-delay">
+  <h2>Aktualności</h2>
+  <ul>
+    <li><strong>[20.06.2025]</strong> Nowy film już na kanale! 🔥</li>
+    <li><strong>[15.06.2025]</strong> Zmieniliśmy wygląd strony 🎨</li>
+  </ul>
+</section>
+
+  </main>
+
+  <script>
+    const navSound = new Audio("assets/sounds/nav.mp3");
+    document.querySelectorAll("a").forEach(el => {
+      el.addEventListener("click", () => {
+        navSound.currentTime = 0;
+        navSound.play();
+      });
+    });
+  </script>
+  <script src="scripts/navsound.js"></script>
+
+<script>
+  ScrollReveal().reveal('.card', {
+    duration: 1000,
+    origin: 'bottom',
+    distance: '50px',
+    easing: 'ease-in-out',
+    reset: false
+  });
+</script>
+</body>
+</html>
